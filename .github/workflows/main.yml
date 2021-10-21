@@ -1,0 +1,26 @@
+name: Build
+
+on: workflow_dispatch 
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Build x64
+      run: |
+        chmod +x ./build.sh
+        ./build.sh 14.17.0 23.0.7599858
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: libnode
+        path: |
+          ./build
+        if-no-files-found: ignore # 'warn' or 'ignore' are also available, defaults to `warn`
+        retention-days: 1

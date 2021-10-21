@@ -1,0 +1,5 @@
+/*.tar.gz
+/*.zip
+/node-*
+/build
+/node-android-build
