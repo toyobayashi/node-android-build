@@ -25,7 +25,7 @@ jobs:
     - name: Build x64
       run: |
         chmod +x ./build.sh
-        ./build.sh $INPUT_NODEVERSION $INPUT_NDKVERSION
+        ./build.sh "${{ github.event.inputs.nodeVersion }}" "${{ github.event.inputs.ndkVersion }}"
 
     - uses: actions/upload-artifact@v2
       with:
