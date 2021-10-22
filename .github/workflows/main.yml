@@ -11,6 +11,14 @@ on:
         description: 'NDK version'
         required: true
         default: '23.0.7599858'
+      arch:
+        description: 'Arch'
+        required: true
+        default: 'arm64'
+      sdkPlatform:
+        description: 'SDK platform'
+        required: true
+        default: '23'
 
 jobs:
   build:
@@ -25,7 +33,7 @@ jobs:
     - name: Build x64
       run: |
         chmod +x ./build.sh
-        ./build.sh "${{ github.event.inputs.nodeVersion }}" "${{ github.event.inputs.ndkVersion }}"
+        ./build.sh "${{ github.event.inputs.nodeVersion }}" "${{ github.event.inputs.ndkVersion }}" "${{ github.event.inputs.arch }}" "${{ github.event.inputs.sdkPlatform }}"
 
     - uses: actions/upload-artifact@v2
       with:
