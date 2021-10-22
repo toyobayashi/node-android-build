@@ -21,12 +21,13 @@ if [ ! -f "$tarfile" ]; then
   # curl -OL "https://hub.fastgit.org/nodejs/node/archive/refs/tags/$tarfile"
 fi
 
-unzip -d . "$tarfile"
+unzip -d . "$tarfile" >/dev/null
 
 dir="node-$nodever"
 cd "$dir"
 patch -p0 < ../android-configure.patch
 chmod +x ./android-configure
+cat ./android-configure
 ./android-configure "$ANDROID_HOME/ndk/$ndkver" arm64 23
 # make
 
