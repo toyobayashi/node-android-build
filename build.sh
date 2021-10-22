@@ -22,41 +22,41 @@ if [ ! -f "$tarfile" ]; then
 fi
 
 unzip -d . "$tarfile"
-patch -p0 < ./android-configure.patch
 
 dir="node-$nodever"
 cd "$dir"
+patch -p0 < ../android-configure.patch
 chmod +x ./android-configure
 ./android-configure "$ANDROID_HOME/ndk/$ndkver" arm64 23
-make
+# make
 
-outdir="build"
-mkdir -p "../$outdir/lib"
-HEADERS_ONLY=1 python3 ./tools/install.py install "../$outdir" /
-cp -rpf "./out/Release/libnode.so" "../$outdir/lib/libnode.so"
-cd ..
+# outdir="build"
+# mkdir -p "../$outdir/lib"
+# HEADERS_ONLY=1 python3 ./tools/install.py install "../$outdir" /
+# cp -rpf "./out/Release/libnode.so" "../$outdir/lib/libnode.so"
+# cd ..
 
-zipname="build-$nodever.zip"
+# zipname="build-$nodever.zip"
 
-rm -rf "$zipname"
+# rm -rf "$zipname"
 
-type zip >/dev/null 2>&1
-if [ "x$?" == "x0" ]; then
-  cd "$outdir"
-  zip -r -y "../$zipname" .
-  cd ..
-else
-  powershell.exe -nologo -noprofile -command \
-    '& { param([String]$sourceDirectoryName, [String]$destinationArchiveFileName, [Boolean]$includeBaseDirectory); Add-Type -A "System.IO.Compression.FileSystem"; Add-Type -A "System.Text.Encoding"; [IO.Compression.ZipFile]::CreateFromDirectory($sourceDirectoryName, $destinationArchiveFileName, [IO.Compression.CompressionLevel]::Fastest, $includeBaseDirectory, [System.Text.Encoding]::UTF8); exit !$?;}' \
-    -sourceDirectoryName "\"$outdir\"" \
-    -destinationArchiveFileName "$zipname" \
-    -includeBaseDirectory '$false'
-  if [ $? -ne 0 ]; then
-    echo "Zip failed"
-    exit $?
-  fi
-fi
+# type zip >/dev/null 2>&1
+# if [ "x$?" == "x0" ]; then
+#   cd "$outdir"
+#   zip -r -y "../$zipname" .
+#   cd ..
+# else
+#   powershell.exe -nologo -noprofile -command \
+#     '& { param([String]$sourceDirectoryName, [String]$destinationArchiveFileName, [Boolean]$includeBaseDirectory); Add-Type -A "System.IO.Compression.FileSystem"; Add-Type -A "System.Text.Encoding"; [IO.Compression.ZipFile]::CreateFromDirectory($sourceDirectoryName, $destinationArchiveFileName, [IO.Compression.CompressionLevel]::Fastest, $includeBaseDirectory, [System.Text.Encoding]::UTF8); exit !$?;}' \
+#     -sourceDirectoryName "\"$outdir\"" \
+#     -destinationArchiveFileName "$zipname" \
+#     -includeBaseDirectory '$false'
+#   if [ $? -ne 0 ]; then
+#     echo "Zip failed"
+#     exit $?
+#   fi
+# fi
 
-rm -rf "$outdir"
-rm -rf "$dir"
-# rm -rf "$tarfile"
+# rm -rf "$outdir"
+# rm -rf "$dir"
+# # rm -rf "$tarfile"
