@@ -1,6 +1,16 @@
 name: Build
 
-on: workflow_dispatch 
+on:
+  workflow_dispatch:
+    inputs:
+      nodeVersion:
+        description: 'Node.js version'
+        required: true
+        default: '14.17.0'
+      ndkVersion:
+        description: 'NDK version'
+        required: true
+        default: '23.0.7599858'
 
 jobs:
   build:
@@ -15,7 +25,7 @@ jobs:
     - name: Build x64
       run: |
         chmod +x ./build.sh
-        ./build.sh 14.17.0 23.0.7599858
+        ./build.sh $INPUT_NODEVERSION $INPUT_NDKVERSION
 
     - uses: actions/upload-artifact@v2
       with:
