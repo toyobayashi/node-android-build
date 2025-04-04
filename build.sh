@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 if [ "x$1" == "x" ]; then
   echo "Missing node version"
   exit 1
@@ -38,6 +40,7 @@ unzip -d . "$tarfile" >/dev/null
 
 dir="node-$nodever"
 cd "$dir"
+ls -al
 patch -p0 < ../android-configure.patch
 chmod +x ./android-configure
 cat ./android-configure
