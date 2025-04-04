@@ -7,7 +7,7 @@ fi
 
 ndkver=
 if [ "x$2" == "x" ]; then
-  ndkver="23.0.7599858"
+  ndkver="28.0.13004108"
 else
   ndkver="$2"
 fi
@@ -21,7 +21,7 @@ fi
 
 sdkver=
 if [ "x$4" == "x" ]; then
-  sdkver="23"
+  sdkver="35"
 else
   sdkver="$4"
 fi
@@ -41,7 +41,7 @@ cd "$dir"
 patch -p0 < ../android-configure.patch
 chmod +x ./android-configure
 cat ./android-configure
-./android-configure "$ANDROID_HOME/ndk/$ndkver" "$arch" "$sdkver"
+./android-configure "$ANDROID_HOME/ndk/$ndkver" "$sdkver" "$arch"
 make
 
 outdir="build"

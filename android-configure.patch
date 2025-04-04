@@ -1,11 +1,8 @@
---- ./android-configure	2021-05-11 20:06:24.000000000 +0800
-+++ ./android-configure2	2021-10-21 20:16:30.419112735 +0800
-@@ -81,5 +81,7 @@
-         --dest-os=android \
-         --without-snapshot \
-         --openssl-no-asm \
--        --cross-compiling
-+        --cross-compiling \
-+        --without-inspector \
-+        --shared
- fi
+--- ./android_configure.py	2025-04-04 22:18:44
++++ ./android_configure2.py	2025-04-04 22:21:00
+@@ -74,4 +74,4 @@
+ os.environ['GYP_DEFINES'] = GYP_DEFINES
+ 
+ if os.path.exists("./configure"):
+-    os.system("./configure --dest-cpu=" + DEST_CPU + " --dest-os=android --openssl-no-asm --cross-compiling")
++    os.system("./configure --dest-cpu=" + DEST_CPU + " --dest-os=android --openssl-no-asm --cross-compiling --without-inspector --shared")

@@ -6,11 +6,11 @@ on:
       nodeVersion:
         description: 'Node.js version'
         required: true
-        default: '14.17.0'
+        default: '20.19.0'
       ndkVersion:
         description: 'NDK version'
         required: true
-        default: '23.0.7599858'
+        default: '28.0.13004108'
       arch:
         description: 'Arch'
         required: true
@@ -18,7 +18,7 @@ on:
       sdkPlatform:
         description: 'SDK platform'
         required: true
-        default: '23'
+        default: '35'
 
 jobs:
   build:
