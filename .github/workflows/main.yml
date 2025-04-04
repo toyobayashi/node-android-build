@@ -10,7 +10,7 @@ on:
       ndkVersion:
         description: 'NDK version'
         required: true
-        default: '28.0.13004108'
+        default: '27.2.12479018'
       arch:
         description: 'Arch'
         required: true
@@ -29,7 +29,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
     - name: Build x64
       run: |
         chmod +x ./build.sh

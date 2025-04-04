@@ -9,7 +9,7 @@ fi
 
 ndkver=
 if [ "x$2" == "x" ]; then
-  ndkver="28.0.13004108"
+  ndkver="27.2.12479018"
 else
   ndkver="$2"
 fi
