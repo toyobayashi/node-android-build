@@ -38,12 +38,16 @@ fi
 
 unzip -d . "$tarfile" >/dev/null
 
+export CC_host=gcc
+export CXX_host=g++
+export AR_host=ar
+
 dir="node-$nodever"
 cd "$dir"
 ls -al
 patch -p0 < ../android-configure.patch
 chmod +x ./android-configure
-cat ./android-configure
+cat ./android_configure.py
 ./android-configure "$ANDROID_HOME/ndk/$ndkver" "$sdkver" "$arch"
 make -j4
 
