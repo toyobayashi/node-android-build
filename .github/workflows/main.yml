@@ -28,14 +28,14 @@ jobs:
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     
     - name: Build x64
       run: |
         chmod +x ./build.sh
         ./build.sh "${{ github.event.inputs.nodeVersion }}" "${{ github.event.inputs.ndkVersion }}" "${{ github.event.inputs.arch }}" "${{ github.event.inputs.sdkPlatform }}"
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: libnode
         path: |
