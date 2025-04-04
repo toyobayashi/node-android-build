@@ -46,14 +46,17 @@ dir="node-$nodever"
 cd "$dir"
 ls -al
 patch -p0 < ../android-configure.patch
+patch -p0 < ../zlib.patch
 chmod +x ./android-configure
 cat ./android_configure.py
+cat ./deps/zlib/zlib.gyp
 ./android-configure "$ANDROID_HOME/ndk/$ndkver" "$sdkver" "$arch"
 make -j4
 
 outdir="build"
 mkdir -p "../$outdir/lib"
 HEADERS_ONLY=1 python3 ./tools/install.py install "../$outdir" /
+ls -al ./out/Release
 cp -rpf "./out/Release/libnode.so" "../$outdir/lib/libnode.so"
 cd ..
 

@@ -1,0 +1,42 @@
+--- ./deps/zlib/zlib.gyp	2025-04-05 01:52:11
++++ ./deps/zlib/zlib2.gyp	2025-04-05 01:53:06
+@@ -195,6 +195,9 @@
+               'defines': [
+                 'USE_FILE32API'
+               ],
++            }],
++            ['OS=="android"', {
++              'dependencies': [ 'libcpufeatures' ],
+             }],
+             # Incorporate optimizations where possible.
+             ['(target_arch in "ia32 x64" and OS!="ios") or arm_fpu=="neon"', {
+@@ -264,6 +267,29 @@
+           },
+         },
+       ],
++    }],
++    ['OS=="android"', {
++      'targets': [
++        {
++          'target_name': 'libcpufeatures',
++          'type': 'static_library',
++          'sources': [
++            '<(android_ndk_path)/sources/android/cpufeatures/cpu-features.c',
++          ],
++          'cflags': [ '-Wall', '-Wextra', '-Werror' ],
++          'include_dirs': [
++            '<(android_ndk_path)/sources/android/cpufeatures',
++          ],
++          'direct_dependent_settings': {
++            'include_dirs': ['<(android_ndk_path)/sources/android/cpufeatures'],
++          },
++          'link_settings': {
++            'libraries': [
++              '-ldl',
++            ]
++          }
++        }
++      ]
+     }],
+   ],
+ }
