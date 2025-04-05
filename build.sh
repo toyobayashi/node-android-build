@@ -55,7 +55,7 @@ make -j4
 
 outdir="build"
 mkdir -p "../$outdir/lib"
-HEADERS_ONLY=1 python3 ./tools/install.py install "../$outdir" /
+python3 ./tools/install.py --headers-only --dest-dir "../$outdir" --prefix / install
 ls -al ./out/Release
 cp -rpf "./out/Release/libnode.so" "../$outdir/lib/libnode.so"
 cd ..

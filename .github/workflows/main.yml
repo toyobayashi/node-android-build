@@ -30,10 +30,45 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build x64
+    - name: Fetch Node.js ${{ github.event.inputs.nodeVersion }}
       run: |
-        chmod +x ./build.sh
-        ./build.sh "${{ github.event.inputs.nodeVersion }}" "${{ github.event.inputs.ndkVersion }}" "${{ github.event.inputs.arch }}" "${{ github.event.inputs.sdkPlatform }}"
+        curl -OL "https://github.com/nodejs/node/archive/refs/tags/v${{ github.event.inputs.nodeVersion }}.zip"
+        unzip -d . "v${{ github.event.inputs.nodeVersion }}.zip"
+
+    - name: Patch Node.js
+      working-directory: node-${{ github.event.inputs.nodeVersion }}
+      run: |
+        patch -p0 < ../android-configure.patch
+        patch -p0 < ../zlib.patch
+        cat ./android_configure.py
+        cat ./deps/zlib/zlib.gyp
+
+    - name: Configure
+      working-directory: node-${{ github.event.inputs.nodeVersion }}
+      env:
+        CC_host: gcc
+        CXX_host: g++
+        AR_host: ar
+      run: |
+        chmod +x ./android-configure
+        ./android-configure "$ANDROID_HOME/ndk/${{ github.event.inputs.ndkVersion }}" "${{ github.event.inputs.sdkPlatform }}" "${{ github.event.inputs.arch }}"
+    
+    - name: Build
+      working-directory: node-${{ github.event.inputs.nodeVersion }}
+      env:
+        CC_host: gcc
+        CXX_host: g++
+        AR_host: ar
+      run: make -j4
+
+    - name: Distribute
+      working-directory: node-${{ github.event.inputs.nodeVersion }}
+      run: |
+        mkdir -p ../build/lib
+        mkdir -p ../build/bin
+        python3 ./tools/install.py --headers-only --dest-dir ../build --prefix / install
+        [[ -f ./out/Release/libnode.so ]] && cp -rpf ./out/Release/libnode.so ../build/lib/ || echo "out/Release/libnode.so does not exist"
+        [[ -f ./out/Release/node ]] && cp -rpf ./out/Release/node ../build/bin/ || echo "out/Release/node does not exist"
 
     - uses: actions/upload-artifact@v4
       with:
