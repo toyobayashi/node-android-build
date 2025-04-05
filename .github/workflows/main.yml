@@ -52,7 +52,14 @@ jobs:
       run: |
         chmod +x ./android-configure
         ./android-configure "$ANDROID_HOME/ndk/${{ github.event.inputs.ndkVersion }}" "${{ github.event.inputs.sdkPlatform }}" "${{ github.event.inputs.arch }}"
-    
+
+    - name: Cache Build Output
+      uses: actions/cache@v4
+      with:
+        path: |
+          node-${{ github.event.inputs.nodeVersion }}/out/Release
+        key: build-${{ runner.os }}-${{ github.event.inputs.nodeVersion }}-${{ github.event.inputs.arch }}-${{ github.event.inputs.sdkPlatform }}-${{ github.event.inputs.ndkVersion }}
+
     - name: Build
       working-directory: node-${{ github.event.inputs.nodeVersion }}
       env:
