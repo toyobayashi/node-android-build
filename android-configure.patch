@@ -1,8 +1,11 @@
---- ./android_configure.py	2025-04-04 22:18:44
-+++ ./android_configure2.py	2025-04-04 22:21:00
-@@ -74,4 +74,4 @@
+--- ./android_configure.py	2025-04-06 14:54:13
++++ ./android_configure2.py	2025-04-06 14:53:38
+@@ -74,4 +74,7 @@
  os.environ['GYP_DEFINES'] = GYP_DEFINES
  
  if os.path.exists("./configure"):
 -    os.system("./configure --dest-cpu=" + DEST_CPU + " --dest-os=android --openssl-no-asm --cross-compiling")
-+    os.system("./configure --dest-cpu=" + DEST_CPU + " --dest-os=android --openssl-no-asm --cross-compiling --without-inspector --shared")
++    rest_argv = ['"' + arg + '"' if ' ' in arg else arg for arg in sys.argv[4:]]
++    configure_cmd = "./configure --dest-cpu=" + DEST_CPU + " --dest-os=android --openssl-no-asm --cross-compiling" + ((" " + " ".join(rest_argv)) if rest_argv else "")
++    print("\033[92mInfo: \033[0m" + "Running configure command: " + configure_cmd)
++    os.system(configure_cmd)

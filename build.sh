@@ -50,7 +50,7 @@ patch -p0 < ../zlib.patch
 chmod +x ./android-configure
 cat ./android_configure.py
 cat ./deps/zlib/zlib.gyp
-./android-configure "$ANDROID_HOME/ndk/$ndkver" "$sdkver" "$arch"
+./android-configure "$ANDROID_HOME/ndk/$ndkver" "$sdkver" "$arch" --without-inspector --shared
 make -j4
 
 outdir="build"

@@ -19,6 +19,10 @@ on:
         description: 'SDK platform'
         required: true
         default: '35'
+      configureOptions:
+        description: 'Configure options'
+        required: false
+        default: '--without-inspector --shared'
 
 jobs:
   build:
@@ -51,7 +55,7 @@ jobs:
         AR_host: ar
       run: |
         chmod +x ./android-configure
-        ./android-configure "$ANDROID_HOME/ndk/${{ github.event.inputs.ndkVersion }}" "${{ github.event.inputs.sdkPlatform }}" "${{ github.event.inputs.arch }}"
+        ./android-configure "$ANDROID_HOME/ndk/${{ github.event.inputs.ndkVersion }}" "${{ github.event.inputs.sdkPlatform }}" "${{ github.event.inputs.arch }}" ${{  github.event.inputs.configureOptions }}
 
     - name: Cache Build Output
       uses: actions/cache@v4
