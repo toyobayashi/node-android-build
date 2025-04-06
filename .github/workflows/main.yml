@@ -36,8 +36,8 @@ jobs:
 
     - name: Fetch Node.js ${{ github.event.inputs.nodeVersion }}
       run: |
-        curl -OL "https://github.com/nodejs/node/archive/refs/tags/v${{ github.event.inputs.nodeVersion }}.zip"
-        unzip -d . "v${{ github.event.inputs.nodeVersion }}.zip"
+        curl -sOL "https://github.com/nodejs/node/archive/refs/tags/v${{ github.event.inputs.nodeVersion }}.zip"
+        unzip -d . "v${{ github.event.inputs.nodeVersion }}.zip" >/dev/null
 
     - name: Patch Node.js
       working-directory: node-${{ github.event.inputs.nodeVersion }}
