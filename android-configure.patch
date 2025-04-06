@@ -1,5 +1,14 @@
 --- ./android_configure.py	2025-04-06 14:54:13
-+++ ./android_configure2.py	2025-04-06 14:53:38
++++ ./android_configure2.py	2025-04-06 15:04:38
+@@ -18,7 +18,7 @@
+     patch_android()
+     sys.exit(0)
+ 
+-if len(sys.argv) != 4:
++if len(sys.argv) < 4:
+     print("Usage: ./android-configure [patch] <path to the Android NDK> <Android SDK version> <target architecture>")
+     sys.exit(1)
+ 
 @@ -74,4 +74,7 @@
  os.environ['GYP_DEFINES'] = GYP_DEFINES
  
